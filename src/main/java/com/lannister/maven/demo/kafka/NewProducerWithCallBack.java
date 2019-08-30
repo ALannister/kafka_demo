@@ -1,11 +1,13 @@
-package com.lannister.java.demo.kafka;
+package com.lannister.maven.demo.kafka;
 
 import java.util.Properties;
 
+import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 
-public class NewProducer {
+public class NewProducerWithCallBack {
 	public static void main(String[] args) {
 		Properties properties = new Properties();
 		//kafka服务端的主机名和端口号
@@ -26,7 +28,16 @@ public class NewProducer {
 		properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties);
 		for(int i=0;i<50;i++) {
-			producer.send(new ProducerRecord<String, String>("test", String.valueOf(i), "Hello world - " + i));
+			producer.send(new ProducerRecord<String, String>("test", String.valueOf(i), "Hello Super Man - " + i),new Callback() {
+				
+				public void onCompletion(RecordMetadata metadata, Exception exception) {
+					// TODO Auto-generated method stub
+					if(metadata != null) {
+						System.err.println("partition: " + metadata.partition() + " -- " + "offset: " + metadata.offset());
+					}
+					
+				}
+			});
 		}
 		producer.close();
 		

@@ -1,4 +1,4 @@
-package com.lannister.java.demo.kafka;
+package com.lannister.maven.demo.kafka;
 
 import java.util.HashMap;
 import java.util.List;

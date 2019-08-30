@@ -1,11 +1,11 @@
-package com.lannister.java.demo.kafka;
+package com.lannister.maven.demo.kafka;
 
 import java.util.Properties;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-public class PartitionerProducer {
+public class NewProducer {
 	public static void main(String[] args) {
 		Properties properties = new Properties();
 		//kafka服务端的主机名和端口号
@@ -24,10 +24,9 @@ public class PartitionerProducer {
 		properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		//value序列化
 		properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-		properties.put("partitioner.class", "com.lannister.java.demo.kafka.NewPartitioner");
 		KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties);
 		for(int i=0;i<50;i++) {
-			producer.send(new ProducerRecord<String, String>("test", String.valueOf(i), "Hello Dark - " + i));
+			producer.send(new ProducerRecord<String, String>("test", String.valueOf(i), "Hello world - " + i));
 		}
 		producer.close();
 		
